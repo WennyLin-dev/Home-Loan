@@ -2,11 +2,11 @@
 // import { useParams } from "react-router-dom";
 import { Container } from "@mui/material";
 
-import { Account, Transaction } from "@/lib/definitions";
+// import { Account, Transaction } from "@/lib/definitions";
 
-import AccountDetails from "@/components/dashboard/AccountDetails";
-import TransactionTable from "@/components/dashboard/TransactionsTable";
-import AccountSummary from "@/components/dashboard/AccountSummary";
+// import AccountDetails from "@/components/dashboard/AccountDetails";
+// import TransactionTable from "@/components/dashboard/TransactionsTable";
+// import AccountSummary from "@/components/dashboard/AccountSummary";
 
 interface LoanDetailsParams {
   accountId: string;
