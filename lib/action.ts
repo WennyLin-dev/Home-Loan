@@ -1,7 +1,7 @@
-import bcrypt from "bcrypt";
-import { prisma } from "@/lib/prisma";
+// import bcrypt from "bcrypt";
+// import { prisma } from "@/lib/prisma";
 
-const login = async (credentials:any) => {
+const login = async () => {
     try {
       // const user = await prisma
       
@@ -22,3 +22,4 @@ const login = async (credentials:any) => {
       throw new Error("Failed to login!");
     }
   };
+  export {login}

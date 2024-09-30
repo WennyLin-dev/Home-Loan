@@ -48,7 +48,7 @@ const TransactionsTable = ({
     setPage(0);
   };
   useEffect(() => {
-    let data = sortByKey(transaction, "paidAt", "desc");
+    const data = sortByKey(transaction, "paidAt", "desc");
     // Calculate the slice of transaction for the current page
     const currentTransactions = data.slice(
       page * rowsPerPage,

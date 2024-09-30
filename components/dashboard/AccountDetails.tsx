@@ -25,11 +25,11 @@ const AccountDetails = ({ account }: { account: Account }) => {
   // const symbol = useAppSelector((state) => state.client.currencySymbol);
   // const direction = useAppSelector((state) => state.client.currencyDirection);
 
-  const formatValue = (key: string, value: any) => {
+  const formatValue = (key: string, value: string|number) => {
     const type = accountSummary[key];
-    if (type === "shortDate") {
+    if (type === "shortDate" && typeof value !=="number") {
       return formatDateToTimezone(value);
-    } else if (type === "number") {
+    } else if (type === "number"  && typeof value !=="string" ) {
       return convertToCurrencyUnit(value, '$', "LTR");
     } else if (type === "string") {
       return value;
@@ -54,7 +54,7 @@ const AccountDetails = ({ account }: { account: Account }) => {
           marginBottom: "24px",
         }}
       >
-        {Object.entries(account).map(([key, value], index) => {
+        {Object.entries(account).map(([key, value]) => {
           if (accountSummary[key]) {
             return (
               <Fragment key={key}>

@@ -7,14 +7,15 @@ export function camelCaseToTitleCase(camelCaseString: string): string {
 }
 
 export function sortByKey(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   array: any[],
   key: string,
   direction: "asc" | "desc" | undefined
 ) {
   const dir = direction === "desc" ? -1 : 1;
   return array.sort(function (a, b) {
-    var x = a[key];
-    var y = b[key];
+    const x = a[key];
+    const y = b[key];
     return x < y ? -1 * dir : x > y ? 1 * dir : 0;
   });
 }

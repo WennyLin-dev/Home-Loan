@@ -98,11 +98,12 @@ const ReviewForm = ({ account, rateOptions }: IProps) => {
 
   useEffect(() => {
     if (rateOptions.length > 0 && rateId) {
-      let targetRate = rateOptions.find((rate) => rate.rateId === rateId);
+      const targetRate = rateOptions.find((rate) => rate.rateId === rateId);
       if (targetRate) {
         calculateRepaymentInfo(targetRate);
       }
     }
+    // eslint-disable-next-line
   }, [rateId, rateOptions.length]);
 
   // Calculate maximum repayment when currentRepayment is updated
@@ -110,6 +111,7 @@ const ReviewForm = ({ account, rateOptions }: IProps) => {
     if (currentRepayment.endDate) {
       calculateMax();
     }
+    // eslint-disable-next-line
   }, [currentRepayment?.endDate]);
 
   const calculateMax = () => {
@@ -127,7 +129,7 @@ const ReviewForm = ({ account, rateOptions }: IProps) => {
   };
 
   const handleNewPayment = (repay: number | undefined) => {
-    let repayValue = repay
+    const repayValue = repay
       ? repay * 100
       : currentRepayment?.repaymentAmount || 0;
     return setCurrentRepayment({

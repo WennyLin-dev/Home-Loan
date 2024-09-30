@@ -1,12 +1,6 @@
 import {
-  Table,
-  TableBody,
   TableCell,
-  TableHead,
   TableRow,
-  TablePagination,
-  Typography,
-  Box,
   styled,
 } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";

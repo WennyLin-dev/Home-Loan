@@ -27,7 +27,7 @@ function checkIfExpiry(date: string | Date): boolean {
 
   // Convert UTC time to NZT
   const zonedDate = toZonedTime(now, timeZone);
-  let zonedEndDate = toZonedTime(date, timeZone);
+  const zonedEndDate = toZonedTime(date, timeZone);
   zonedEndDate.setMonth(zonedEndDate.getMonth() - 1);
   return zonedEndDate <= zonedDate;
 }

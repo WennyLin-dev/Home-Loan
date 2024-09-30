@@ -3,7 +3,6 @@ import { Typography, Card, Box } from "@mui/material";
 import { Colors } from "@/theme/color";
 import { camelCaseToTitleCase } from "@/lib/utils/helper";
 import { formatDateToTimezone } from "@/lib/utils/dateTimeHelper";
-import { convertToCurrencyUnit } from "@/lib/utils/currencyHelper";
 import StyledBox from "@/components/FlexBox";
 // import { useAppSelector } from "store/hooks";
 
@@ -38,6 +37,7 @@ const RepaymentCard = ({ loan, title, isNew }: IPropsLoan) => {
       return `${value} Year${Number(value) > 1 ? `s` : ``}`;
     }
     if (typeof value === "number") {
+      return value/100;
       // return convertToCurrencyUnit(value, symbol, direction);
     }
     return value;

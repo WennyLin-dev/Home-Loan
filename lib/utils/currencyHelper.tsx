@@ -23,7 +23,7 @@ export const convertToCurrencyUnit = (
   symbol?: string,
   direction?: string,
 ) => {
-  let number = num ? num / 100 : 0;
+  const number = num ? num / 100 : 0;
   let format = "";
 
   format = number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });;
@@ -40,7 +40,7 @@ export const convertToCurrencyUnit = (
 
 // convert to unit
 export const convertToUnit = (num: number | undefined) => {
-  let number = num ? num / 100 : 0;
+  const number = num ? num / 100 : 0;
   return roundNumber(number);
 };
 

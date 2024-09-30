@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useMemo } from "react";
-import Link from "next/link";
+import React, { useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Typography, Radio, Box, Button, styled } from "@mui/material";
 import Grid from "@mui/material/Grid2";

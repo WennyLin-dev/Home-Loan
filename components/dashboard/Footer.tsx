@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
       </Grid>
       <Grid size={12}>
         <Typography sx={{ fontSize: "0.7em" }}>
-          Copyright © 2024 Lin's Company
+          Copyright © 2024 Lin&apos;s Company
         </Typography>
       </Grid>
     </Grid>
