@@ -1,7 +1,9 @@
+'use client'
+
 import React from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-// import { setInterestRate } from '../store/calculatorSlice';
+// import { setInterestRate } from '../store/calculatorSlices';
 import { 
   Box, 
   Typography, 
@@ -48,8 +50,8 @@ const rates = [
 ];
 
 const SelectRatePage: React.FC = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
+  // const router = useRouter();
+  // const dispatch = useDispatch();
 
   const handleSelectRate = (rate: number) => {
     // dispatch(setInterestRate(rate));

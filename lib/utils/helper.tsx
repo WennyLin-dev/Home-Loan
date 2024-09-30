@@ -9,7 +9,7 @@ export function camelCaseToTitleCase(camelCaseString: string): string {
 export function sortByKey(
   array: any[],
   key: string,
-  direction: "asc" | "desc" | undefined,
+  direction: "asc" | "desc" | undefined
 ) {
   const dir = direction === "desc" ? -1 : 1;
   return array.sort(function (a, b) {
@@ -17,4 +17,13 @@ export function sortByKey(
     var y = b[key];
     return x < y ? -1 * dir : x > y ? 1 * dir : 0;
   });
+}
+
+export function handlePath() {
+    const currentPath = window.location.pathname;
+    const pathArray = currentPath.split("/");
+    pathArray.pop();
+    const newPath = pathArray.join("/");
+    const newSearch = window.location.search;
+    return { newPath, newSearch };
 }

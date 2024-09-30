@@ -107,12 +107,23 @@
 // };
 
 // export default LoanDetails;
+import Box from "@mui/material/Box";
+import { prisma } from "@/lib/prisma";
+import LooksOneOutlinedIcon from "@mui/icons-material/LooksOneOutlined";
+import StepContainer from "@/components/calculator/StepHeader";
+import FixedRateSelection from "@/components/calculator/RatesSelection";
 
+const Page = async () => {
+  const rateOptions = await prisma.interestRate.findMany();
 
-const Page = () => {
   return (
-    <div className=''>Page</div>
-  )
-}
+    <Box sx={{ padding: "40px", boxSizing: "border-box" }}>
+      <StepContainer stepName="Choose a new fixed rate for your home loan">
+        <LooksOneOutlinedIcon />
+      </StepContainer>
+      <FixedRateSelection data={rateOptions} />
+    </Box>
+  );
+};
 
-export default Page
+export default Page;

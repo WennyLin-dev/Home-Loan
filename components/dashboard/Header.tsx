@@ -1,33 +1,28 @@
-import {
-  styled,
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Avatar,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Avatar } from "@mui/material";
 import AdbIcon from "@mui/icons-material/Adb";
+import { prisma } from "@/lib/prisma";
 
-import { ClientData } from "@/lib/definitions";
-
-const StyledBox = styled(Box)({
-  display: "flex",
-  gap: "16px",
-  alignItems: "center",
-});
-
-const StyledToolBar = styled(Toolbar)({
-  display: "flex",
-  justifyContent: "space-between",
-  padding: "0px 40px",
-});
-
-const Header = () => {
-  const client = {};
+const Header = async () => {
+  const client = await prisma.client.findUnique({
+    where: { clientId: "123e4567-e89b-12d3-a456-426614174000" },
+  });
   return (
     <AppBar position="sticky">
-      <StyledToolBar disableGutters>
-        <StyledBox>
+      <Toolbar
+        disableGutters
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "0px 40px",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            gap: "16px",
+            alignItems: "center",
+          }}
+        >
           <AdbIcon />
           <Typography
             variant="h6"
@@ -39,15 +34,24 @@ const Header = () => {
           >
             Bank Name
           </Typography>
-        </StyledBox>
+        </Box>
 
-        <StyledBox>
-          <Avatar src={client?.avatar} alt={`${client?.clientName}'s avatar`} />
+        <Box
+          sx={{
+            display: "flex",
+            gap: "16px",
+            alignItems: "center",
+          }}
+        >
+          <Avatar
+            src={client?.avatar || "/avatar.svg"}
+            alt={`${client?.clientName}'s avatar`}
+          />
           <Typography variant="h6" noWrap sx={{ fontWeight: 500 }}>
             {client?.clientName}
           </Typography>
-        </StyledBox>
-      </StyledToolBar>
+        </Box>
+      </Toolbar>
     </AppBar>
   );
 };

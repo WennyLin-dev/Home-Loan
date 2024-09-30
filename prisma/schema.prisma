@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  username String
+  password String
+  id       String @id @unique @default(uuid())
+  client   Client @relation(fields: [id], references: [clientId])
+}
+
+model Client {
+  clientId    String        @id @unique @default(uuid())
+  clientName  String
+  dob         String
+  irdNumber   String        @unique
+  citizenship String
+  phoneNumber String
+  email       String        @unique
+  status      String
+  salutation  String
+  country     String
+  currency    String
+  avatar      String? // Optional field
+  timeZone    String
+  Account     Account[]
+  Transaction Transaction[]
+  User        User?
+}
+
+model Account {
+  accountId         String  @id @unique @default(uuid())
+  loanId            String  @unique
+  accountType       String
+  accountName       String
+  accountNumber     String  @unique
+  status            String
+  loanAmount        Int
+  remainingBalance  Int
+  interestRate      Int
+  effectiveDate     String
+  effectiveDateEnd  String
+  maturityDate      String
+  paymentFrequency  String
+  nextPaymentDate   String
+  nextPaymentAmount Int
+  lastPaymentDate   String
+  lastPaymentAmount Int
+  loanType          String
+  period            Int
+  currency          String
+  requireRefix      Boolean
+
+  clientId String // Foreign key referencing Client
+  client   Client @relation(fields: [clientId], references: [clientId])
+
+  Transaction Transaction[]
+}
+
+model Transaction {
+  transactionId    String @id @unique @default(uuid())
+  accountId        String // Foreign key referencing Account
+  clientId         String // Foreign key referencing Client
+  transactionType  String
+  paidAmount       Int // Amount in cents
+  currency         String
+  transactionDate  String
+  paidAt           String
+  status           String
+  description      String
+  remainingBalance Int // Remaining balance in cents
+  referenceId      String
+
+  account Account @relation(fields: [accountId], references: [accountId])
+  client  Client  @relation(fields: [clientId], references: [clientId])
+}
+
+model InterestRate {
+  rateId      String @id @unique @default(uuid())
+  fixedRate   Float
+  startDate   String
+  endDate     String
+  rateType    String
+  currency    String
+  period      Int
+  description String
+  status      String
+}

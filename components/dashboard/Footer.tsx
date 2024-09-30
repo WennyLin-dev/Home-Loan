@@ -1,3 +1,5 @@
+'use client'
+
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -5,7 +7,7 @@ import AccessTimeSharpIcon from "@mui/icons-material/AccessTimeSharp";
 
 import { Colors } from "@/theme/color";
 
-import { useCurrentTime } from "@/lib/utils/dateTimeHelper";
+import { useCurrentTime } from "@/lib/utils/currentTime";
 
 interface ContactInfo {
   country: string;

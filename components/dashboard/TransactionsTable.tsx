@@ -1,46 +1,22 @@
+'use client'
 import React, { useEffect, useState } from "react";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   TablePagination,
   Typography,
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
   Box,
-  styled,
 } from "@mui/material";
-import { tableCellClasses } from "@mui/material/TableCell";
 
-import { Colors } from "@theme/color";
+import { Colors } from "@/theme/color";
 import { Transaction } from "@/lib/definitions";
-import { sortByKey } from "utils/helper";
-import { convertToCurrencyUnit } from "utils/currencyHelper";
-import { formatDateToTimezone } from "utils/dateTimeHelper";
-
-import { useAppSelector } from "store/hooks";
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: Colors.Blue,
-    color: theme.palette.common.white,
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
+import { sortByKey } from "@/lib/utils/helper";
+import { convertToCurrencyUnit } from "@/lib/utils/currencyHelper";
+import { formatDateToTimezone } from "@/lib/utils/dateTimeHelper";
+import { StyledTableCell, StyledTableRow } from "./StyledTable";
+// import { useAppSelector } from "store/hooks";
 
 function subtotal(items: readonly Transaction[]) {
   return items
@@ -58,8 +34,8 @@ const TransactionsTable = ({
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [currentTransactions, setTranscations] = useState<Transaction[]>([]);
-  const symbol = useAppSelector((state) => state.client.currencySymbol);
-  const direction = useAppSelector((state) => state.client.currencyDirection);
+  // const symbol = useAppSelector((state) => state.client.currencySymbol);
+  // const direction = useAppSelector((state) => state.client.currencyDirection);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -82,7 +58,7 @@ const TransactionsTable = ({
   }, [transaction, page, rowsPerPage]);
 
   function ccyFormat(value: number) {
-    return convertToCurrencyUnit(value, symbol, direction);
+    return convertToCurrencyUnit(value, "$", "LTR");
   }
   return (
     <>

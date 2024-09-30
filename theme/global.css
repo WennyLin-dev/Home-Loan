@@ -1,0 +1,25 @@
+/* Global styles in CSS */
+
+body {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+  background-color: #ffffff;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+

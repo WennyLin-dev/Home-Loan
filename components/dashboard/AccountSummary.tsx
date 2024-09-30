@@ -2,14 +2,15 @@ import { Box, Typography } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { Colors } from "@/theme/color";
 
-import { Account } from "@/lib/definitions";
-
 import StyledBox from "@/components/FlexBox";
-// import StyledLink from "component/styledLink";
 import { AccountCard } from "@/components/dashboard/AccountCard";
+import { getAccountsByClientId } from "@/lib/data";
+import { clientId } from "@/lib/settings";
+import Link from "next/link";
 
-const Head = ({ account }: { account?: Account }) => {
-  const data = account|| {};
+const Summary = async ({ params }: { params: { id: string } }) => {
+  const data = await getAccountsByClientId(clientId);
+  const account = data.find((item) => item.accountId === params.id) || null;
   return (
     <Box
       sx={{
@@ -17,7 +18,11 @@ const Head = ({ account }: { account?: Account }) => {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         height: "240px",
-        position: "relative",
+        display:"flex",
+        flexDirection:"column",
+        alignItems:"center",
+        justifyContent:"center",
+        gap:2
       }}
     >
       <StyledBox
@@ -26,18 +31,15 @@ const Head = ({ account }: { account?: Account }) => {
           width: "70%",
           minWidth: "500px",
           borderRadius: "4px",
-          margin: "40px auto",
         }}
       >
-        <AccountCard account={data} hideRedirect={true} />
+        {account && <AccountCard account={account} hideRedirect={true} />}
       </StyledBox>
-      {/* <StyledLink path={"/"}>
+      <Link href={"/dashboard"}>
         <StyledBox
           sx={{
             width: "max-content",
-            gap: "10px",
-            position: "absolute",
-            right: "40px",
+            gap:1
           }}
         >
           <HomeOutlinedIcon sx={{ color: Colors.White }} />
@@ -45,9 +47,9 @@ const Head = ({ account }: { account?: Account }) => {
             Back To Home
           </Typography>
         </StyledBox>
-      </StyledLink> */}
+      </Link>
     </Box>
   );
 };
 
-export default Head;
+export default Summary;

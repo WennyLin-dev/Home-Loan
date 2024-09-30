@@ -1,23 +1,12 @@
 import { Fragment } from "react";
-import { Typography, Box, styled } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
-import { Account } from "@/lib/definitions";
+import { Account } from "@prisma/client";
 import { formatDateToTimezone } from "@/lib/utils/dateTimeHelper";
 import { convertToCurrencyUnit } from "@/lib/utils/currencyHelper";
 import { camelCaseToTitleCase } from "@/lib/utils/helper";
-// import { useAppSelector } from "store/hooks";
 
 import { Colors } from "@/theme/color";
-
-const GridBox = styled(Box)({
-  display: "grid",
-  gridTemplateColumns: "1fr 2fr",
-  gap: "10px 20px",
-  padding: "10px",
-  border: `1px solid ${Colors.Grey}`,
-  borderRadius: "5px",
-  marginBottom: "24px",
-});
 
 type FieldTypes = { [key: string]: "shortDate" | "number" | "string" };
 
@@ -41,7 +30,7 @@ const AccountDetails = ({ account }: { account: Account }) => {
     if (type === "shortDate") {
       return formatDateToTimezone(value);
     } else if (type === "number") {
-      // return convertToCurrencyUnit(value, symbol, direction);
+      return convertToCurrencyUnit(value, '$', "LTR");
     } else if (type === "string") {
       return value;
     }
@@ -51,10 +40,20 @@ const AccountDetails = ({ account }: { account: Account }) => {
   return (
     <>
       <Typography variant="h3" sx={{ mb: 3 }}>
-        Account Summary
+        Account Details
       </Typography>
 
-      <GridBox>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr 2fr",
+          gap: "10px 20px",
+          padding: "10px",
+          border: `1px solid ${Colors.Grey}`,
+          borderRadius: "5px",
+          marginBottom: "24px",
+        }}
+      >
         {Object.entries(account).map(([key, value], index) => {
           if (accountSummary[key]) {
             return (
@@ -69,7 +68,7 @@ const AccountDetails = ({ account }: { account: Account }) => {
             );
           } else return null;
         })}
-      </GridBox>
+      </Box>
     </>
   );
 };

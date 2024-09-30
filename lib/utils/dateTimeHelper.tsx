@@ -1,40 +1,20 @@
-import { useState, useEffect } from "react";
 import { toZonedTime } from "date-fns-tz";
 import { isValid, format } from "date-fns";
-//get current time
-const useCurrentTime = () => {
-  const [currentTime, setCurrentTime] = useState<string>("");
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      // Format date and time
-      const formattedTime = formatDateToTimezone(now, "dd MMM yyyy, HH:mm");
-      // let timezoneAbbr = Intl.DateTimeFormat('en', {timeZoneName: 'short'})?.formatToParts()?.find(p => p.type === 'timeZoneName')?.value
-      setCurrentTime(`Current time ${formattedTime}`);
-    };
-
-    // Update the time immediately and set an interval to update every minute
-    updateTime();
-    const intervalId = setInterval(updateTime, 60000);
-
-    // Clean up the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
-
-  return { currentTime };
-};
 
 // format UTC date to timezone date
-function formatDateToTimezone(date: string | Date, dateFormat = "dd MMM yyyy") {
+function formatDateToTimezone(date: string | Date, dateFormat = "dd MMM yyyy"):string {
   if (!date || !isValid(new Date(date))) {
-    return date.toString();
+    return "";
   }
   // Get the current timezone from the browser
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const zonedDate = toZonedTime(date, timeZone);
-  const formattedDate = format(zonedDate, dateFormat);
+  const zonedDate = toZonedTime(new Date(date), timeZone);
+  if(isValid(zonedDate)){
+      const formattedDate = format(zonedDate, dateFormat);
   return formattedDate;
+  }
+  return ""
+
 }
 
 // compare expiry date with current date, return whether expiry
@@ -52,4 +32,4 @@ function checkIfExpiry(date: string | Date): boolean {
   return zonedEndDate <= zonedDate;
 }
 
-export { useCurrentTime, formatDateToTimezone, checkIfExpiry };
+export { formatDateToTimezone, checkIfExpiry };

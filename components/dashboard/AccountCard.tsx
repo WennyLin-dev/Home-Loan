@@ -1,7 +1,8 @@
-import { Fragment, useMemo } from "react";
-import Navigation from "@/component/styledLink";
-
-import { formatDateToTimezone, checkIfExpiry } from "@/lib/utils/dateTimeHelper";
+import Link from "next/link";
+import {
+  formatDateToTimezone,
+  checkIfExpiry,
+} from "@/lib/utils/dateTimeHelper";
 import { convertToCurrencyUnit } from "@/lib/utils/currencyHelper";
 
 import {
@@ -11,21 +12,15 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Divider,
-  List,
   Typography,
-  Link,
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-
-import { Account } from "@/lib/definitions";
-// import { Colors } from "@theme///color";
-
-// import StyledBox from "component/muiComponent/flexBox";
-// import { useAppSelector } from "store/hooks";
+import { Colors } from "@/theme/color";
+import StyledBox from "@/components/FlexBox";
+import { Account } from "@prisma/client";
 
 interface IProps {
-  account: Account|{};
+  account: Account | {};
   hideRedirect?: boolean;
   hideWarning?: boolean;
 }
@@ -35,23 +30,21 @@ export function AccountCard({
   hideRedirect = false,
   hideWarning = false,
 }: IProps) {
-  // const symbol = useAppSelector((state) => state.client.currencySymbol);
-  // const direction = useAppSelector((state) => state.client.currencyDirection);
+  if (Object.keys(account).length < 1) {
+    return null;
+  }
+  const accountDetail = `${account?.loanType} at ${account?.interestRate}%
+     p.a. until ${account?.maturityDate}`;
 
-  // const accountDetail = useMemo(
-  //   () => `${account.loanType} at ${account.interestRate}%
-  //   p.a. until ${formatDateToTimezone(account.maturityDate)}`,
-  //   [account.loanType, account.interestRate, account.maturityDate],
-  // );
-  // const isExpiry = checkIfExpiry(account?.effectiveDateEnd);
+  const isExpiry = checkIfExpiry(account?.effectiveDateEnd);
 
   return (
     <ListItem alignItems="center">
       <ListItemAvatar sx={{ marginRight: 2 }}>
-        <Avatar alt={account?.accountName} />
+        <Avatar src={account?.accountName || "/avatar.svg"} alt={""} />
       </ListItemAvatar>
 
-      {/* <StyledBox
+      <StyledBox
         sx={{
           alignItems: "flex-start",
           flexDirection: "column",
@@ -69,10 +62,10 @@ export function AccountCard({
           <span>{account.accountNumber}</span> | <span>{accountDetail}</span>
         </Typography>
         <Typography sx={{ mt: 1.5 }}>
-          Next repayment {formatDateToTimezone(account.nextPaymentDate)}
+          Next repayment {account?.nextPaymentDate}
         </Typography>
         {!hideRedirect && (
-          <Link href={`/account/${account.accountId}`}>
+          <Link href={`/dashboard/${account?.accountId}`}>
             <Typography sx={{ color: "text.secondary" }}>
               View more details
             </Typography>
@@ -82,13 +75,13 @@ export function AccountCard({
 
       <Box>
         {isExpiry && (
-          <Navigation path={`/account/${account.accountId}/refix`}>
+          <Link href={`/dashboard/${account?.accountId}/rate`}>
             {!hideWarning && (
               <StyledBox sx={{ color: Colors.Red }}>
                 <Typography>Refix rates now</Typography>
                 <Tooltip
                   title={`Your previous home loan will expire on ${formatDateToTimezone(
-                    account.effectiveDateEnd,
+                    account?.effectiveDateEnd
                   )}, please refix new rates before that date.`}
                   arrow
                 >
@@ -96,31 +89,16 @@ export function AccountCard({
                 </Tooltip>
               </StyledBox>
             )}
-          </Navigation>
+          </Link>
         )}
         <ListItemText
           primary={
             <Typography sx={{ fontWeight: "bold", mt: 1, textAlign: "right" }}>
-              {convertToCurrencyUnit(account.loanAmount, symbol, direction)}
+              {convertToCurrencyUnit(account?.loanAmount)}
             </Typography>
           }
         />
-      </Box> */}
+      </Box>
     </ListItem>
-  );
-}
-
-export default function AccountList({ accounts }: { accounts: Account[] }) {
-  return (
-    <List>
-      {accounts.map((account: Account) => {
-        return (
-          <Fragment key={account.accountId}>
-            <AccountCard account={account} />
-            <Divider variant="fullWidth" />
-          </Fragment>
-        );
-      })}
-    </List>
   );
 }
