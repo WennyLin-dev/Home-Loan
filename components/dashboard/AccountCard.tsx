@@ -20,7 +20,7 @@ import StyledBox from "@/components/FlexBox";
 import { Account } from "@prisma/client";
 
 interface IProps {
-  account: Account | object;
+  account: Account;
   hideRedirect?: boolean;
   hideWarning?: boolean;
 }
