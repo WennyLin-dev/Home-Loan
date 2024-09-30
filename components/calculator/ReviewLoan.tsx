@@ -91,7 +91,7 @@ const ReviewForm = ({ account, rateOptions }: IProps) => {
       maturityDate: account?.maturityDate ?? "",
       rateType: account?.loanType ?? "",
       loanAmount: account?.remainingBalance ?? 0,
-      repaymentAmount: monthlyRepayment * 100 ?? 0,
+      repaymentAmount: monthlyRepayment * 100,
       period: targetRate.period,
     });
   };
