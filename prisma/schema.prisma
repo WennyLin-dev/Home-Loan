@@ -61,7 +61,6 @@ model Account {
   loanType          String
   period            Int
   currency          String
-  requireRefix      Boolean
 
   clientId String // Foreign key referencing Client
   client   Client @relation(fields: [clientId], references: [clientId])
